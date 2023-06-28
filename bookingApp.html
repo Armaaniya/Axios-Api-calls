@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking Appointment App</title>
+</head>
+<body>
+  <h1>Booking Appointment App</h1>
+
+  <form id="appointment-form">
+    <label for="name-input">Name:</label>
+    <input type="text" id="name-input" required>
+    <label for="email-input">Email:</label>
+    <input type="email" id="email-input" required>
+    <label for="date-input">Date:</label>
+    <input type="date" id="date-input" required>
+    <label for="time-input">Time:</label>
+    <input type="time" id="time-input" required>
+    <button type="submit">Book Appointment</button>
+  </form>
+
+  <ul id="appointment-list"></ul>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+<script>
+    // Function to create a new appointment item
+function createAppointmentItem(name, email, date, time) {
+    const li = document.createElement('li');
+    li.textContent = `Name: ${name}, Email: ${email}, Date: ${date}, Time: ${time}`;
+  axios.get("https://crudcrud.com/api/31c6f5d9f5af4632a3dd8892ff1800d5/CrudDemo",li)
+  .then((response) => {
+    console.log(response)
+  })
+  .catch((err) => {
+    document.body.innerHTML=document.body.innerHTML+"<h3>Opps ! Something Went Wrong Here.</h3>"
+    console.log(err);
+  })
+  
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.addEventListener('click', () => {
+      // Perform edit functionality here
+      const newName = prompt('Enter new name:');
+      const newEmail = prompt('Enter new email:');
+      const newDate = prompt('Enter new date:');
+      const newTime = prompt('Enter new time:');
+      li.textContent = `Name: ${newName}, Email: ${newEmail}, Date: ${newDate}, Time: ${newTime}`;
+    });
+  
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', () => {
+      // Perform delete functionality here
+      li.remove();
+    });
+  
+    li.appendChild(editButton);
+    li.appendChild(deleteButton);
+  
+    return li;
+  }
+  
+  // Function to handle form submission
+  function handleFormSubmit(event) {
+    event.preventDefault();
+  
+    const nameInput = document.getElementById('name-input');
+    const emailInput = document.getElementById('email-input');
+    const dateInput = document.getElementById('date-input');
+    const timeInput = document.getElementById('time-input');
+  
+    const name = nameInput.value;
+    const email = emailInput.value;
+    const date = dateInput.value;
+    const time = timeInput.value;
+  
+    const appointmentItem = createAppointmentItem(name, email, date, time);
+  
+    const appointmentList = document.getElementById('appointment-list');
+    appointmentList.appendChild(appointmentItem);
+  
+    // Clear input fields
+    nameInput.value = '';
+    emailInput.value = '';
+    dateInput.value = '';
+    timeInput.value = '';
+  }
+  
+  // Add event listener to the form
+  const appointmentForm = document.getElementById('appointment-form');
+  appointmentForm.addEventListener('submit', handleFormSubmit);
+  
+  </script>
+</body>
+</html>
