@@ -85,6 +85,7 @@ function createAppointmentItem(name, email, date, time) {
       document.body.innerHTML=document.body.innerHTML+"<h3>Opps ! Something Went Wrong Here.</h3>"
       console.log(err);
     })
+    axios.delete("https://crudcrud.com/api/4b4601c55ea84a70ad424db022619279/appointmentdata/649d3884c632b703e8307c7b")
   
     // Clear input fields
     nameInput.value = '';
